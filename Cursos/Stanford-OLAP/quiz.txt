@@ -1,0 +1,52 @@
+[Q1] Consider a fact table Sales(saleID, itemID, color, size, qty, unitPrice), and the following three queries:
+
+Q1: Select itemID, color, size, Sum(qty*unitPrice)
+    From Sales
+    Group By itemID, color, size
+Q2: Select itemID, size, Sum(qty*unitPrice)
+    From Sales
+    Group By itemID, size
+Q3: Select itemID, size, Sum(qty*unitPrice)
+    From Sales
+    Where size < 10
+    Group By itemID, size 
+Depending on the order in which we execute two of these queries, the pair of actions may be viewed as an example of roll-up, drill-down or slicing. Which of the following statements is correct?
+
+Going from Q2 to Q3 is an example of slicing. correct
+Going from Q1 to Q2 is an example of slicing.
+Going from Q3 to Q2 is an example of slicing.
+Going from Q1 to Q2 is an example of drill-down.
+
+[Q2] Consider a fact table Facts(D1,D2,D3,x), and the following three queries:
+
+Q1: Select D1,D2,D3,Sum(x)
+    From Facts
+    Group By D1,D2,D3
+Q2: Select D1,D2,D3,Sum(x)
+    From Facts
+    Group By D1,D2,D3 WITH CUBE
+Q3: Select D1,D2,D3,Sum(x)
+    From Facts
+    Group By D1,D2,D3 WITH ROLLUP
+Suppose attributes D1, D2, and D3 have n1, n2, and n3 different values respectively, and assume that each possible combination of values appears at least once in table Facts. The number of tuples in the result of each of the three queries above can be specified as an arithmetic formula involving n1, n2, and n3. Pick the one tuple (a,b,c,d,e,f) in the list below such that when n1=a, n2=b, and n3=c, then the result sizes of queries Q1, Q2, and Q3 are d, e, and f respectively. (Hint: It may be helpful to first write formulas describing how d, e, and f depend on a, b, and c. Then find the answer that satisfies your formulas.)
+
+(5, 4, 3, 12, 100, 80)
+(5, 10, 10, 500, 726, 550)
+(4, 7, 3, 84, 160, 117) correct
+(2, 2, 2, 8, 64, 15)
+
+Resposta
+
+Q2)
+n1 = a
+n2 = b
+n3 = c
+
+---------
+a = 2
+b = 2
+c = 2
+
+d - Group by = a*b*c => 2*2*2 = 8
+e - with cube = (a+1)*(b+1)*(b+1) = 27
+f - rollup = d + a*(b+1) + 1 = 8 + 2*3 + 1 = 15
